@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
     {
         float horiz = Input.GetAxis("Horizontal");
         float vert = Input.GetAxis("Vertical");
-        transform.Translate(new Vector3(horiz, vert, 0) * (_speed + SpeedUpNow()) * Time.deltaTime);
+        transform.Translate(new Vector3(horiz, vert, 0) * (_speed + SpeedIncreaseNow()) * Time.deltaTime);
 
         if(transform.position.x > 11.5)
         {
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private int SpeedUpNow()
+    private int SpeedIncreaseNow()
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
