@@ -5,8 +5,7 @@ using UnityEngine;
 public class PoolingManager : MonoSinglton<PoolingManager>
 {
     [Header("Ammount Of Bullets")]
-    [SerializeField]
-    private int bulletsAmmount;
+    public int bulletsAmmount;
 
     [Header("Normal Bullets Behavior")]
     [SerializeField]
@@ -45,17 +44,26 @@ public class PoolingManager : MonoSinglton<PoolingManager>
 
     public void shootBullets(GameObject p, bool isTripleEnable)
     {
-        if(isTripleEnable == false)
+        if(bulletsAmmount > 0)
         {
-            float y = p.transform.position.y + 0.8f;
-            float x = p.transform.position.x;
-            Vector3 pos = new Vector3(x, y, 0);
-            shoot(Bullets, pos);
+            if (isTripleEnable == false)
+            {
+                float y = p.transform.position.y + 0.8f;
+                float x = p.transform.position.x;
+                Vector3 pos = new Vector3(x, y, 0);
+                shoot(Bullets, pos);               
+            }
+            else
+            {
+                Vector3 pos = p.transform.position;
+                shoot(tripleBullets, pos);
+            }
+            AudioManager.Instance.LaserShotAudioPlay(bulletsAmmount);
+            decreaseAmmo(isTripleEnable);
         }
         else
         {
-            Vector3 pos = p.transform.position;
-            shoot(tripleBullets, pos);
+            AudioManager.Instance.LaserShotAudioPlay(bulletsAmmount);
         }
     }
 
@@ -70,5 +78,15 @@ public class PoolingManager : MonoSinglton<PoolingManager>
                 return;
             }
         }
+    }
+
+    public void decreaseAmmo(bool isTripleEnable)
+    {
+        if (isTripleEnable == false)
+            bulletsAmmount--;
+        else
+            bulletsAmmount -= 3;
+
+        UIManager.Instance.ammouCountUi();
     }
 }

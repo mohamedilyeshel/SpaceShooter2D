@@ -6,6 +6,8 @@ public class AudioManager : MonoSinglton<AudioManager>
 {
     [SerializeField]
     private AudioClip _laserShotClip;
+    [SerializeField]
+    private AudioClip _laserNoAmmo;
     private AudioSource _laserSource;
     [SerializeField]
     private AudioClip _explosionClip;
@@ -21,9 +23,16 @@ public class AudioManager : MonoSinglton<AudioManager>
         _PowerUpSource = GameObject.Find("PowerUPSOUND").GetComponent<AudioSource>();
     }
 
-    public void LaserShotAudioPlay()
+    public void LaserShotAudioPlay(int ammoCount)
     {
-        _laserSource.clip = _laserShotClip;
+        if(ammoCount > 0)
+        {
+            _laserSource.clip = _laserShotClip;
+        }
+        else
+        {
+            _laserSource.clip = _laserNoAmmo;
+        }
         _laserSource.Play();
     }
 

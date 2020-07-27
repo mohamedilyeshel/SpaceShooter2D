@@ -15,11 +15,19 @@ public class UIManager : MonoSinglton<UIManager>
     private GameObject GameOverUI;
     [SerializeField]
     private List<GameObject> _sheildUi = new List<GameObject>();
+    [SerializeField]
+    private Text _ammoCountText;
 
     private void Start()
     {
         _livesUI.sprite = _livesSprite[3];
         GameOverUI.SetActive(false);
+        ammouCountUi();
+    }
+
+    public void ammouCountUi()
+    {
+        _ammoCountText.text = "Ammou Count : " + PoolingManager.Instance.bulletsAmmount.ToString();
     }
 
     public void showGameOver()

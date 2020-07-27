@@ -37,7 +37,6 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             laserShoot();
-            AudioManager.Instance.LaserShotAudioPlay();
         }
 
         if (transform.Find("player_sheild").gameObject.activeInHierarchy == true && isSheild == 0)
