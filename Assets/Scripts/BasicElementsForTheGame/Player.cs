@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     private bool isTripleShot = false;
     [SerializeField]
     private bool isSpeed = false;
-    public bool isSheild = false;
+    public int isSheild;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +38,11 @@ public class Player : MonoBehaviour
         {
             laserShoot();
             AudioManager.Instance.LaserShotAudioPlay();
+        }
+
+        if (transform.Find("player_sheild").gameObject.activeInHierarchy == true && isSheild == 0)
+        {
+            activeAnimationSheild();
         }
     }
 
@@ -100,7 +105,7 @@ public class Player : MonoBehaviour
                 speedBoost(powerScript);
                 break;
             case PowerUp.powerUpsTypes.Sheild:
-                isSheild = true;
+                isSheild = 3;
                 activeAnimationSheild();
                 break;
         }
@@ -120,7 +125,7 @@ public class Player : MonoBehaviour
                 speedBoost(type);
                 break;
             case PowerUp.powerUpsTypes.Sheild:
-                isSheild = false;
+                isSheild = 0;
                 activeAnimationSheild();
                 break;
         }
@@ -140,7 +145,7 @@ public class Player : MonoBehaviour
 
     private void activeAnimationSheild()
     {
-        if(isSheild == true)
+        if (isSheild != 0)
         {
             transform.Find("player_sheild").gameObject.SetActive(true);
         }
@@ -148,17 +153,22 @@ public class Player : MonoBehaviour
         {
             transform.Find("player_sheild").gameObject.SetActive(false);
         }
+        UIManager.Instance.SheildUIUpdate(isSheild);
     }
 
     public void decreaseHealth()
     {
-        if (isSheild == false)
+        if (isSheild == 0)
         {
             GameManager.Instance.health--;
             UIManager.Instance.healthUIUpdate();
             GameManager.Instance.PlayerHurt();
         }
         else
+        {
+            isSheild--;
+            UIManager.Instance.SheildUIUpdate(isSheild);
             return;
+        }           
     }
 }

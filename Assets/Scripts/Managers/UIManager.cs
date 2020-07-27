@@ -13,6 +13,8 @@ public class UIManager : MonoSinglton<UIManager>
     private List<Sprite> _livesSprite = new List<Sprite>();
     [SerializeField]
     private GameObject GameOverUI;
+    [SerializeField]
+    private List<GameObject> _sheildUi = new List<GameObject>();
 
     private void Start()
     {
@@ -53,5 +55,33 @@ public class UIManager : MonoSinglton<UIManager>
     public void healthUIUpdate()
     {
         _livesUI.sprite = _livesSprite[GameManager.Instance.health];
+    }
+
+    public void SheildUIUpdate(int sheildLevel)
+    {
+        switch(sheildLevel)
+        {
+            case 0:
+                _sheildUi[0].SetActive(false);
+                break;
+            case 1:
+                _sheildUi[2].SetActive(false);
+                break;
+            case 2:
+                _sheildUi[3].SetActive(false);
+                break;
+            case 3:
+                activeAllSheildUI();
+                break;
+        }
+    }
+
+    private void activeAllSheildUI()
+    {
+        foreach(var s in _sheildUi)
+        {
+            if(s.activeInHierarchy == false)
+            s.SetActive(true);
+        }
     }
 }
