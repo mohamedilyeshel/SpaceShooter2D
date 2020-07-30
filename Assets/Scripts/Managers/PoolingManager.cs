@@ -6,6 +6,8 @@ public class PoolingManager : MonoSinglton<PoolingManager>
 {
     [Header("Ammount Of Bullets")]
     public int bulletsAmmount;
+    [SerializeField]
+    private int _bulletCollected;
 
     [Header("Normal Bullets Behavior")]
     [SerializeField]
@@ -24,6 +26,11 @@ public class PoolingManager : MonoSinglton<PoolingManager>
     private GameObject _tripleContainer;
     [SerializeField]
     private List<GameObject> tripleBullets = new List<GameObject>();
+
+    public void RefillAmmo()
+    {
+        bulletsAmmount += _bulletCollected;
+    }
 
     public void spawnBullets(GameObject p)
     {

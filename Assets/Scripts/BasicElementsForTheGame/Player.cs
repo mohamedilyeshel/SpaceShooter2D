@@ -107,6 +107,10 @@ public class Player : MonoBehaviour
                 isSheild = 3;
                 activeAnimationSheild();
                 break;
+            case PowerUp.powerUpsTypes.ammoCollect:
+                PoolingManager.Instance.RefillAmmo();
+                UIManager.Instance.ammouCountUi();
+                break;
         }
         StartCoroutine(cooldownPowerUp(powerScript, SpawnManager.Instance.powerUps[i].powerUpCooldown));
     }

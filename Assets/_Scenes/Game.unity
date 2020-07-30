@@ -166,6 +166,9 @@ MonoBehaviour:
   - powerUpPrefab: {fileID: 8076122448590360063, guid: 5941768f514f10945a16718ee7795350,
       type: 3}
     powerUpCooldown: 20
+  - powerUpPrefab: {fileID: 4024827449091875128, guid: 623ec285bbf0b6e4cbe9f2fb8a5facca,
+      type: 3}
+    powerUpCooldown: 0
   _spawnDone: 0
 --- !u!4 &41749378
 Transform:
@@ -213,7 +216,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 922435084}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -458,6 +461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletsAmmount: 15
+  _bulletCollected: 15
   _laser: {fileID: 671184002562697255, guid: 37a30db6974582c42823101d73a30fc8, type: 3}
   laserFireRate: 0.15
   _bulletContainer: {fileID: 726845889}
@@ -1215,9 +1219,9 @@ RectTransform:
   m_Children:
   - {fileID: 822668668}
   - {fileID: 1393694568}
-  - {fileID: 1841184522}
-  - {fileID: 1898090388}
   - {fileID: 137180349}
+  - {fileID: 1898090388}
+  - {fileID: 1841184522}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2410,7 +2414,7 @@ RectTransform:
   - {fileID: 1707248573}
   - {fileID: 706268513}
   m_Father: {fileID: 922435084}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

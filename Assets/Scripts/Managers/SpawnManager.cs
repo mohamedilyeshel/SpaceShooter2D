@@ -35,6 +35,7 @@ public class SpawnManager : MonoSinglton<SpawnManager>
     {
         StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnPowerUp());
+        StartCoroutine(SpawnAmmoPowerUP());
     }
 
     public void SpawnPowerUps()
@@ -68,10 +69,9 @@ public class SpawnManager : MonoSinglton<SpawnManager>
         while(_spawnDone == false)
         {
             int i = Random.Range(0, powerUps.Count);
-            if (powerUps[i].powerUpPrefab.activeInHierarchy == false && Time.time > 15)
+            if (powerUps[i].powerUpPrefab.activeInHierarchy == false && Time.time > 15 && i != 3)
             {
-                powerUps[i].powerUpPrefab.transform.position = new Vector3(Random.Range(-9, 10), 7.0f, 0);
-                powerUps[i].powerUpPrefab.SetActive(true);
+                AddThePowerUP(powerUps[i].powerUpPrefab);
                 yield return new WaitForSeconds(30.0f);
             }
             else
@@ -79,6 +79,21 @@ public class SpawnManager : MonoSinglton<SpawnManager>
                 yield return null;
             }
         }
+    }
+
+    public IEnumerator SpawnAmmoPowerUP()
+    {
+        while(_spawnDone == false)
+        {
+            AddThePowerUP(powerUps[3].powerUpPrefab);
+            yield return new WaitForSeconds(10.0f);
+        }
+    }
+
+    private void AddThePowerUP(GameObject prefab)
+    {
+        prefab.transform.position = new Vector3(Random.Range(-9, 10), 7.0f, 0);
+        prefab.SetActive(true);
     }
 
     public IEnumerator SpawnEnemy()

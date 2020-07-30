@@ -12,7 +12,8 @@ public class PowerUp : MonoBehaviour
     {
         TripleShot,
         Speed,
-        Sheild
+        Sheild,
+        ammoCollect
     }
     public powerUpsTypes currentPowerUp;
 

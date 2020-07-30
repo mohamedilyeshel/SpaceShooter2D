@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
             {
                 PoolingManager.Instance.shoot(enemyBullets, transform.position);
             }
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(6.0f);
         }
     }
 
