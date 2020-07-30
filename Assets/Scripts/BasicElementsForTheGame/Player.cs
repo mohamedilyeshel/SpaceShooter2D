@@ -111,6 +111,10 @@ public class Player : MonoBehaviour
                 PoolingManager.Instance.RefillAmmo();
                 UIManager.Instance.ammouCountUi();
                 break;
+            case PowerUp.powerUpsTypes.health:
+                GameManager.Instance.AddHealth();
+                UIManager.Instance.healthUIUpdate();
+                break;
         }
         StartCoroutine(cooldownPowerUp(powerScript, SpawnManager.Instance.powerUps[i].powerUpCooldown));
     }

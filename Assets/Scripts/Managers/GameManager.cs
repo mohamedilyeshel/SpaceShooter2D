@@ -76,7 +76,6 @@ public class GameManager : MonoSinglton<GameManager>
             if (_playerHurt[i].activeInHierarchy == false)
             {
                 _playerHurt[i].SetActive(true);
-                isDone = true;
                 break;
             }
             else if(health == 0)
@@ -84,5 +83,30 @@ public class GameManager : MonoSinglton<GameManager>
                 isDone = true;
             }
         } while (isDone == false);
+    }
+
+    private void PlayerRecover()
+    {
+        bool isDone = false;
+        do
+        {
+            int i = Random.Range(0, 2);
+            if (_playerHurt[i].activeInHierarchy == true)
+            {
+                _playerHurt[i].SetActive(false);
+                break;
+            }
+        } while (isDone == false);
+    }
+
+    public void AddHealth()
+    {
+        if (health < 3)
+        {
+            PlayerRecover();
+            health++;
+        }
+        else
+            return;
     }
 }

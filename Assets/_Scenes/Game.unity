@@ -169,6 +169,9 @@ MonoBehaviour:
   - powerUpPrefab: {fileID: 4024827449091875128, guid: 623ec285bbf0b6e4cbe9f2fb8a5facca,
       type: 3}
     powerUpCooldown: 0
+  - powerUpPrefab: {fileID: 5006280321053681704, guid: 7602426f167a9534a87609a1ffdfa746,
+      type: 3}
+    powerUpCooldown: 0
   _spawnDone: 0
 --- !u!4 &41749378
 Transform:
