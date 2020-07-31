@@ -69,7 +69,7 @@ public class SpawnManager : MonoSinglton<SpawnManager>
         while(_spawnDone == false)
         {
             int i = Random.Range(0, powerUps.Count);
-            if (powerUps[i].powerUpPrefab.activeInHierarchy == false && Time.time > 1 && i != 3)
+            if (powerUps[i].powerUpPrefab.activeInHierarchy == false && Time.time > 15 && i != 3)
             {
                 AddThePowerUP(powerUps[i].powerUpPrefab);
                 yield return new WaitForSeconds(30.0f);

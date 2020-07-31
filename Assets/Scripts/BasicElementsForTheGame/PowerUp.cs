@@ -14,7 +14,8 @@ public class PowerUp : MonoBehaviour
         Speed,
         Sheild,
         ammoCollect,
-        health
+        health,
+        multiShot
     }
     public powerUpsTypes currentPowerUp;
 
@@ -59,8 +60,13 @@ public class PowerUp : MonoBehaviour
                 }
             }
 
+            if(currentPowerUp == powerUpsTypes.health && GameManager.Instance.health == 3)
+            {
+                return;
+            }
+
             Player p = collision.transform.GetComponent<Player>();
-            p.runPowerUp(this,i);
+            p.runPowerUp(this, i);
             AudioManager.Instance.PowerUpPlay();
             gameObject.SetActive(false);
         }

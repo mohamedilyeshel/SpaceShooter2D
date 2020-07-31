@@ -6,12 +6,14 @@ public class Laser : MonoBehaviour
 {
     [Header("Bullet State")]
     public int _speed = 8;
+    [SerializeField]
+    private bool _rightLaser;
 
     // Start is called before the first frame update
     void OnEnable()
     {
-        if(transform.parent.tag != "TripleShot")
-            StartCoroutine(hide());   
+        if(transform.parent.name == "BulletsContainer")
+            StartCoroutine(hide());
     }
 
     // Update is called once per frame
@@ -29,6 +31,13 @@ public class Laser : MonoBehaviour
 
     public virtual void laserMvment()
     {
-        transform.Translate(Vector3.up * _speed * Time.deltaTime);
+        if(_rightLaser == true)
+        {
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(Vector3.up * _speed * Time.deltaTime);
+        }
     }
 }

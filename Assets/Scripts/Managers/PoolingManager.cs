@@ -8,6 +8,7 @@ public class PoolingManager : MonoSinglton<PoolingManager>
     public int bulletsAmmount;
     [SerializeField]
     private int _bulletCollected;
+    private bool _canShoot =false;
 
     [Header("Normal Bullets Behavior")]
     [SerializeField]
@@ -26,6 +27,12 @@ public class PoolingManager : MonoSinglton<PoolingManager>
     private GameObject _tripleContainer;
     [SerializeField]
     private List<GameObject> tripleBullets = new List<GameObject>();
+
+    [Header("MultiShot Bullets Behavior")]
+    [SerializeField]
+    private GameObject _multiShotPrefab;
+    [SerializeField]
+    private GameObject _multiShotContainer;
 
     public void RefillAmmo()
     {
@@ -49,28 +56,57 @@ public class PoolingManager : MonoSinglton<PoolingManager>
         bullet.SetActive(false);
     }
 
-    public void shootBullets(GameObject p, bool isTripleEnable)
+    public void shootBullets(GameObject p, Player.laserType laserType)
     {
         if(bulletsAmmount > 0)
         {
-            if (isTripleEnable == false)
+            if (laserType == Player.laserType.normalLaser)
             {
                 float y = p.transform.position.y + 0.8f;
                 float x = p.transform.position.x;
                 Vector3 pos = new Vector3(x, y, 0);
-                shoot(Bullets, pos);               
+                shoot(Bullets, pos);
+                _canShoot = true;
             }
             else
             {
                 Vector3 pos = p.transform.position;
-                shoot(tripleBullets, pos);
+                if (laserType == Player.laserType.tripleShot)
+                {
+                    if(bulletsAmmount < 3)
+                    {
+                        _canShoot = false;
+                        AudioManager.Instance.LaserShotAudioPlay(_canShoot);
+                        return;
+                    }
+                    else
+                    {
+                        _canShoot = true;
+                        shoot(tripleBullets, pos);
+                    }
+                }
+                else
+                {
+                    if(bulletsAmmount < 5)
+                    {
+                        _canShoot = false;
+                        AudioManager.Instance.LaserShotAudioPlay(_canShoot);
+                        return;
+                    }
+                    else
+                    {
+                        _canShoot = true;
+                        Instantiate(_multiShotPrefab, pos, Quaternion.identity, _multiShotContainer.transform);
+                    }
+                }
             }
-            AudioManager.Instance.LaserShotAudioPlay(bulletsAmmount);
-            decreaseAmmo(isTripleEnable);
+            AudioManager.Instance.LaserShotAudioPlay(_canShoot);
+            decreaseAmmo(laserType);
         }
         else
         {
-            AudioManager.Instance.LaserShotAudioPlay(bulletsAmmount);
+            _canShoot = false;
+            AudioManager.Instance.LaserShotAudioPlay(_canShoot);
         }
     }
 
@@ -87,13 +123,19 @@ public class PoolingManager : MonoSinglton<PoolingManager>
         }
     }
 
-    public void decreaseAmmo(bool isTripleEnable)
+    public void decreaseAmmo(Player.laserType laserType)
     {
-        if (isTripleEnable == false)
+        if (laserType == Player.laserType.normalLaser)
             bulletsAmmount--;
-        else
+        else if (laserType == Player.laserType.tripleShot)
             bulletsAmmount -= 3;
+        else
+            bulletsAmmount -= 5;
 
+        if (bulletsAmmount < 0)
+        {
+            bulletsAmmount = 0;
+        }
         UIManager.Instance.ammouCountUi();
     }
 }

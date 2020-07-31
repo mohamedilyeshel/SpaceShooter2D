@@ -23,9 +23,9 @@ public class AudioManager : MonoSinglton<AudioManager>
         _PowerUpSource = GameObject.Find("PowerUPSOUND").GetComponent<AudioSource>();
     }
 
-    public void LaserShotAudioPlay(int ammoCount)
+    public void LaserShotAudioPlay(bool ammoCan)
     {
-        if(ammoCount > 0)
+        if(ammoCan == true)
         {
             _laserSource.clip = _laserShotClip;
         }

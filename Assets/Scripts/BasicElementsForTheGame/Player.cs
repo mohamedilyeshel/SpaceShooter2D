@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -15,9 +16,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _canFire = 0;
 
-    [Header ("PowerUps Active Or Not")]
-    [SerializeField]
-    private bool isTripleShot = false;
+    public enum laserType 
+    {
+        normalLaser,
+        tripleShot,
+        multiShot
+    }
+    [Header("PowerUps Active Or Not")]
+    public laserType currentLaserType = laserType.normalLaser;
     [SerializeField]
     private bool isSpeed = false;
     public int isSheild;
@@ -47,15 +53,15 @@ public class Player : MonoBehaviour
 
     private void laserShoot()
     {
-        if(isTripleShot == false)
+        if(currentLaserType == laserType.normalLaser)
         {
             _canFire = Time.time + PoolingManager.Instance.laserFireRate;
-            PoolingManager.Instance.shootBullets(this.gameObject, isTripleShot);
+            PoolingManager.Instance.shootBullets(this.gameObject, currentLaserType);
         }
         else
         {
             _canFire = Time.time + PoolingManager.Instance.tripleShotRate;
-            PoolingManager.Instance.shootBullets(this.gameObject, isTripleShot);
+            PoolingManager.Instance.shootBullets(this.gameObject, currentLaserType);
         }
     }
 
@@ -97,7 +103,7 @@ public class Player : MonoBehaviour
         switch (powerScript.currentPowerUp)
         {
             case PowerUp.powerUpsTypes.TripleShot:
-                isTripleShot = true;
+                currentLaserType = laserType.tripleShot;
                 break;
             case PowerUp.powerUpsTypes.Speed:
                 isSpeed = true;
@@ -115,6 +121,9 @@ public class Player : MonoBehaviour
                 GameManager.Instance.AddHealth();
                 UIManager.Instance.healthUIUpdate();
                 break;
+            case PowerUp.powerUpsTypes.multiShot:
+                currentLaserType = laserType.multiShot;
+                break;
         }
         StartCoroutine(cooldownPowerUp(powerScript, SpawnManager.Instance.powerUps[i].powerUpCooldown));
     }
@@ -125,7 +134,7 @@ public class Player : MonoBehaviour
         switch(type.currentPowerUp)
         {
             case PowerUp.powerUpsTypes.TripleShot:
-                isTripleShot = false;
+                currentLaserType = laserType.normalLaser;
                 break;
             case PowerUp.powerUpsTypes.Speed:
                 isSpeed = false;
@@ -134,6 +143,9 @@ public class Player : MonoBehaviour
             case PowerUp.powerUpsTypes.Sheild:
                 isSheild = 0;
                 activeAnimationSheild();
+                break;
+            case PowerUp.powerUpsTypes.multiShot:
+                currentLaserType = laserType.normalLaser;
                 break;
         }
     }
