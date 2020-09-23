@@ -17,12 +17,29 @@ public class UIManager : MonoSinglton<UIManager>
     private List<GameObject> _sheildUi = new List<GameObject>();
     [SerializeField]
     private Text _ammoCountText;
+    [SerializeField]
+    private Image _thrusterBar;    
 
     private void Start()
     {
         _livesUI.sprite = _livesSprite[3];
         GameOverUI.SetActive(false);
         ammouCountUi();
+    }
+
+    public float ThrusterLevel()
+    {
+        return _thrusterBar.fillAmount;
+    }
+
+    public void UpdateThrusterBar(bool isRunning)
+    {
+        if (isRunning == true)
+            _thrusterBar.fillAmount -= 0.005f;
+        else
+        {
+            _thrusterBar.fillAmount += 0.01f;
+        }           
     }
 
     public void ammouCountUi()

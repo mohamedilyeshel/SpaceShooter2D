@@ -16,6 +16,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _canFire = 0;
 
+    [SerializeField]
+    private SpriteRenderer _thruster;
+    private bool _canRun = true;
+
     public enum laserType 
     {
         normalLaser,
@@ -69,9 +73,17 @@ public class Player : MonoBehaviour
     {
         float horiz = Input.GetAxis("Horizontal");
         float vert = Input.GetAxis("Vertical");
+
         transform.Translate(new Vector3(horiz, vert, 0) * (_speed + SpeedIncreaseNow()) * Time.deltaTime);
 
-        if(transform.position.x > 11.5)
+        if (UIManager.Instance.ThrusterLevel() == 0f)
+            _canRun = false;
+        else if (UIManager.Instance.ThrusterLevel() > 0.5f)
+            _canRun = true;
+
+        UIManager.Instance.UpdateThrusterBar(_thruster.enabled);
+
+        if (transform.position.x > 11.5)
         {
             transform.position = new Vector3(-11.5f, transform.position.y, 0);
         }
@@ -91,11 +103,17 @@ public class Player : MonoBehaviour
 
     private int SpeedIncreaseNow()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if(_canRun == true)
         {
-            return _increasedSpeed;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                _thruster.enabled = true;
+                return _increasedSpeed;
+            }
         }
-        return 0;
+
+       _thruster.enabled = false;
+       return 0;
     }
 
     public void runPowerUp(PowerUp powerScript, int i)
