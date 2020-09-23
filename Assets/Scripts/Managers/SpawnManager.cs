@@ -35,7 +35,6 @@ public class SpawnManager : MonoSinglton<SpawnManager>
     {
         StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnPowerUp());
-        StartCoroutine(SpawnAmmoPowerUP());
     }
 
     public void SpawnPowerUps()
@@ -64,17 +63,15 @@ public class SpawnManager : MonoSinglton<SpawnManager>
         }
     }
 
-    // Items can be splited to Commun with 0.96 chance to spawn - Rare with 0.03 chance to spawn - Epic with 0.01 chance to spawn
-
     public IEnumerator SpawnPowerUp()
     {
         while(_spawnDone == false)
         {
             var i = SpawnChances();
-            if (powerUps[i].powerUpPrefab.activeInHierarchy == false && Time.time > 15 && i != 3)
+            if (powerUps[i].powerUpPrefab.activeInHierarchy == false)
             {
                 AddThePowerUP(powerUps[i].powerUpPrefab);
-                yield return new WaitForSeconds(30.0f);
+                yield return new WaitForSeconds(15.0f);
             }
             else
             {
@@ -89,18 +86,18 @@ public class SpawnManager : MonoSinglton<SpawnManager>
         while(itemID == -1)
         {
             int i = Random.Range(0, powerUps.Count);
-            float c = Random.Range(0f, 1f);
+            float c = Random.Range(0f, 100f);
             int type = -1;
 
-            if (c < 0.2f)
+            if (c < 2f)
             {
                 type = 2; // Epic Item
             }
-            else if (c > 0.2f && c < 0.4f)
+            else if (c > 2f && c < 5f)
             {
                 type = 1; // Rare Item
             }
-            else if (c > 0.4f)
+            else if (c > 5f && c < 100f)
             {
                 type = 0; // Commun Item
             }
@@ -112,15 +109,6 @@ public class SpawnManager : MonoSinglton<SpawnManager>
         }
 
         return itemID;
-    }
-
-    public IEnumerator SpawnAmmoPowerUP()
-    {
-        while(_spawnDone == false)
-        {
-            AddThePowerUP(powerUps[3].powerUpPrefab);
-            yield return new WaitForSeconds(10.0f);
-        }
     }
 
     private void AddThePowerUP(GameObject prefab)
