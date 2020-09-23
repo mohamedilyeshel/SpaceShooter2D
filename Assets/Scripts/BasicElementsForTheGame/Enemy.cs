@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public enum EnemyMouvementTypes
+    {
+        Vertical,
+        LeftHorizontal,
+        RightHorizontal,
+        Diagonale
+    }
+
     private int _speed;
     private Animator _enemyAnimator;
     [SerializeField]
     private AnimationClip _deathAnimation;
     private bool _stopMoving = false;
     private bool _cankill = true;
+
+    [Header("Enemy Mouvement System")]
+    public EnemyMouvementTypes _currentMouvementType;
 
     [Header("Enemy Bullets")]
     public GameObject bulletPrefab;
@@ -43,11 +54,26 @@ public class Enemy : MonoBehaviour
         enemyTransform();
     }
 
+    public void ChooseRandomMouvementType()
+    {
+        var i = Random.Range(0, 5);
+        var y = 0;
+        foreach (EnemyMouvementTypes type in System.Enum.GetValues(typeof(EnemyMouvementTypes)))
+        {
+            if(i == y)
+            {
+                _currentMouvementType = type;
+                break;
+            }
+            y++;
+        }
+    }
+
     IEnumerator EnemyShoot()
     {
          while(true)
         {
-            if(_cankill == true)
+            if(_cankill == true && enemyBulletAmount != 0)
             {
                 PoolingManager.Instance.shoot(enemyBullets, transform.position);
             }
@@ -61,9 +87,33 @@ public class Enemy : MonoBehaviour
         {
             transform.Translate(Vector3.down * _speed * Time.deltaTime);
         }
-        if (transform.position.y < -6.4)
+        
+        switch(_currentMouvementType)
         {
-            transform.position = new Vector3(Random.Range(-9, 9), 6.4f, 0);
+            case EnemyMouvementTypes.Vertical:
+                if (transform.position.y < -6.4)
+                {
+                    transform.position = new Vector3(Random.Range(-9, 9), 6.4f, 0);
+                }
+                break;
+            case EnemyMouvementTypes.RightHorizontal:
+                if (transform.position.x < -11.5)
+                {
+                    transform.position = new Vector3(11.91f, Random.Range(-0.75f, -5.28f), 0);
+                }
+                break;
+            case EnemyMouvementTypes.LeftHorizontal:
+                if (transform.position.x > 11.5)
+                {
+                    transform.position = new Vector3(-11.91f, Random.Range(-0.75f, -5.28f), 0);
+                }
+                break;
+            case EnemyMouvementTypes.Diagonale:
+                if (transform.position.y < -7.4)
+                {
+                    transform.position = new Vector3(Random.Range(10.87f, 16.43f), Random.Range(11.44f, 5.88f), 0);
+                }
+                break;
         }
     }
 

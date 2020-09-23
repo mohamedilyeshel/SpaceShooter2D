@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deathAnimation: {fileID: 7400000, guid: 20a0ca02655c0534cbe6c3febf122651, type: 2}
+  _currentMouvementType: 0
   bulletPrefab: {fileID: 6163667966897733115, guid: bb2134d5bd335fa43a7dc062225e7fcf,
     type: 3}
   enemyBullets: []
