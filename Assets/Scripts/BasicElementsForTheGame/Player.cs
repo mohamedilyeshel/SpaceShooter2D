@@ -200,11 +200,13 @@ public class Player : MonoBehaviour
             GameManager.Instance.health--;
             UIManager.Instance.healthUIUpdate();
             GameManager.Instance.PlayerHurt();
+            GameManager.Instance.EnableCameraShake();
         }
         else
         {
             isSheild--;
             UIManager.Instance.SheildUIUpdate(isSheild);
+            GameManager.Instance.EnableCameraShake();
             return;
         }           
     }

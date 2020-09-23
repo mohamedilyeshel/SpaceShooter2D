@@ -14,6 +14,12 @@ public class GameManager : MonoSinglton<GameManager>
     private bool _isChangeTimeDone = false;
     [SerializeField]
     private int _scoreChange;
+    private Animator _camShake;
+
+    private void Start()
+    {
+        _camShake = Camera.main.GetComponent<Animator>();
+    }
 
     private void Update()
     {
@@ -37,6 +43,11 @@ public class GameManager : MonoSinglton<GameManager>
         {
             Application.Quit();
         }
+    }
+
+    public void EnableCameraShake()
+    {
+        _camShake.SetTrigger("ShakeIT");
     }
 
     public void ChangeTimeBool()
