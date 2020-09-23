@@ -65,6 +65,11 @@ public class PowerUp : MonoBehaviour
                 return;
             }
 
+            if(currentPowerUp == powerUpsTypes.ammoCollect && PoolingManager.Instance.bulletsAmmount == 15)
+            {
+                return;
+            }
+
             Player p = collision.transform.GetComponent<Player>();
             p.runPowerUp(this, i);
             AudioManager.Instance.PowerUpPlay();

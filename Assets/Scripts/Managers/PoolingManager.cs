@@ -39,6 +39,9 @@ public class PoolingManager : MonoSinglton<PoolingManager>
     public void RefillAmmo()
     {
         bulletsAmmount += _bulletCollected;
+
+        if (bulletsAmmount > 15)
+            bulletsAmmount = 15;
     }
 
     public void spawnBullets(GameObject p)

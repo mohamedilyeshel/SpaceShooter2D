@@ -44,7 +44,7 @@ public class UIManager : MonoSinglton<UIManager>
 
     public void ammouCountUi()
     {
-        _ammoCountText.text = "Ammou Count : " + PoolingManager.Instance.bulletsAmmount.ToString();
+        _ammoCountText.text = "Ammo Count:" + PoolingManager.Instance.bulletsAmmount.ToString() + "/15";
     }
 
     public void showGameOver()
