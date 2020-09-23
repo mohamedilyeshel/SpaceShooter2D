@@ -15,7 +15,7 @@ public class SpawnManager : MonoSinglton<SpawnManager>
     [SerializeField]
     private float _enemySpawnTime = 5.0f;
 
-    [Header ("Power Ups Part Spawn")]
+    [Header ("Power Ups Part Spawn")]    
     [SerializeField]
     private GameObject _powerUpContainer;
     public List<PowerU> powerUps = new List<PowerU>();
@@ -64,11 +64,13 @@ public class SpawnManager : MonoSinglton<SpawnManager>
         }
     }
 
+    // Items can be splited to Commun with 0.96 chance to spawn - Rare with 0.03 chance to spawn - Epic with 0.01 chance to spawn
+
     public IEnumerator SpawnPowerUp()
     {
         while(_spawnDone == false)
         {
-            int i = Random.Range(0, powerUps.Count);
+            var i = SpawnChances();
             if (powerUps[i].powerUpPrefab.activeInHierarchy == false && Time.time > 15 && i != 3)
             {
                 AddThePowerUP(powerUps[i].powerUpPrefab);
@@ -79,6 +81,37 @@ public class SpawnManager : MonoSinglton<SpawnManager>
                 yield return null;
             }
         }
+    }
+
+    private int SpawnChances()
+    {
+        int itemID = -1;
+        while(itemID == -1)
+        {
+            int i = Random.Range(0, powerUps.Count);
+            float c = Random.Range(0f, 1f);
+            int type = -1;
+
+            if (c < 0.2f)
+            {
+                type = 2; // Epic Item
+            }
+            else if (c > 0.2f && c < 0.4f)
+            {
+                type = 1; // Rare Item
+            }
+            else if (c > 0.4f)
+            {
+                type = 0; // Commun Item
+            }
+
+            if ((int)powerUps[i]._typeOfItem == type)
+            {
+                itemID = i;
+            }                
+        }
+
+        return itemID;
     }
 
     public IEnumerator SpawnAmmoPowerUP()

@@ -156,25 +156,34 @@ MonoBehaviour:
   _enemies: []
   _enemySpawnTime: 5
   _powerUpContainer: {fileID: 201918525}
+  _cummonItemsSpawnChances: 96
+  _rareItemsSpawnChances: 1
+  _epicItemsSpawnChances: 3
   powerUps:
   - powerUpPrefab: {fileID: 8790691845140076135, guid: e6bae5e978bac6e4f86da62a6443aea6,
       type: 3}
     powerUpCooldown: 10
+    _typeOfItem: 1
   - powerUpPrefab: {fileID: 1383627703683739720, guid: 1f716a26b300fe746b152c24296eb4af,
       type: 3}
     powerUpCooldown: 10
+    _typeOfItem: 0
   - powerUpPrefab: {fileID: 8076122448590360063, guid: 5941768f514f10945a16718ee7795350,
       type: 3}
     powerUpCooldown: 20
+    _typeOfItem: 1
   - powerUpPrefab: {fileID: 4024827449091875128, guid: 623ec285bbf0b6e4cbe9f2fb8a5facca,
       type: 3}
     powerUpCooldown: 0
+    _typeOfItem: 0
   - powerUpPrefab: {fileID: 5006280321053681704, guid: 7602426f167a9534a87609a1ffdfa746,
       type: 3}
     powerUpCooldown: 0
+    _typeOfItem: 1
   - powerUpPrefab: {fileID: 2668669615318829981, guid: 8629b53b436070d43b585b3bb039f81b,
       type: 3}
     powerUpCooldown: 5
+    _typeOfItem: 2
   _spawnDone: 0
 --- !u!4 &41749378
 Transform:
