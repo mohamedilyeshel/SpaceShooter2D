@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MultiShot : MonoBehaviour
+public class MultiShot : Laser
 {
     // Start is called before the first frame update
     void OnEnable()
     {
         StartCoroutine(hide());
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).GetChild(0).gameObject.activeInHierarchy == false)
+            {
+                transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+            }
+        }
     }
 
-    public IEnumerator hide()
+    public override void laserMvment()
     {
-        yield return new WaitForSeconds(2.0f);
-        Destroy(this.gameObject);
+        // I don't need to move the MultiShot Prefab i need just to hide it
     }
-
 }

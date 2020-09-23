@@ -33,6 +33,8 @@ public class PoolingManager : MonoSinglton<PoolingManager>
     private GameObject _multiShotPrefab;
     [SerializeField]
     private GameObject _multiShotContainer;
+    [SerializeField]
+    private List<GameObject> _multishotBullets = new List<GameObject>();
 
     public void RefillAmmo()
     {
@@ -46,6 +48,7 @@ public class PoolingManager : MonoSinglton<PoolingManager>
             float y = p.transform.position.y;
             Spawn_Bullets(_laser, new Vector3(p.transform.position.x, y + 0.8f, 0), _bulletContainer, Bullets);
             Spawn_Bullets(_tripleShot, p.transform.position, _tripleContainer, tripleBullets);
+            Spawn_Bullets(_multiShotPrefab, p.transform.position, _multiShotContainer, _multishotBullets);
         }
     }
 
@@ -96,7 +99,7 @@ public class PoolingManager : MonoSinglton<PoolingManager>
                     else
                     {
                         _canShoot = true;
-                        Instantiate(_multiShotPrefab, pos, Quaternion.identity, _multiShotContainer.transform);
+                        shoot(_multishotBullets, pos);
                     }
                 }
             }

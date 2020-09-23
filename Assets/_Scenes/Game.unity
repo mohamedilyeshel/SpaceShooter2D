@@ -511,6 +511,7 @@ MonoBehaviour:
   _multiShotPrefab: {fileID: 205235760856217781, guid: 3baaea140dd236d47ab7cd6246add30b,
     type: 3}
   _multiShotContainer: {fileID: 48345099}
+  _multishotBullets: []
 --- !u!1 &453823653
 GameObject:
   m_ObjectHideFlags: 0
@@ -2830,6 +2831,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Asteroid
+      objectReference: {fileID: 0}
+    - target: {fileID: 3351720114713491633, guid: 2310785651826ad46baa34b90fe21723,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3351720114713491636, guid: 2310785651826ad46baa34b90fe21723,
         type: 3}
