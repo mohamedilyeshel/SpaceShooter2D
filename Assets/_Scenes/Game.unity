@@ -187,11 +187,11 @@ MonoBehaviour:
   - powerUpPrefab: {fileID: 2668669615318829981, guid: 8629b53b436070d43b585b3bb039f81b,
       type: 3}
     powerUpCooldown: 7
-    _typeOfItem: 1
+    _typeOfItem: 2
   - powerUpPrefab: {fileID: 2667232585188892184, guid: 44b65d67a1d86a948b33fcecc03c5a9b,
       type: 3}
     powerUpCooldown: 4
-    _typeOfItem: 1
+    _typeOfItem: 2
   _spawnDone: 0
 --- !u!4 &41749378
 Transform:
@@ -3091,7 +3091,7 @@ AudioSource:
   m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128

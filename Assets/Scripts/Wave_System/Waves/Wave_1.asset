@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f17dd02a904c27943a97e2951577f332, type: 3}
   m_Name: Wave_1
   m_EditorClassIdentifier: 
+  enemiesCanShoot: 0
+  canEnemiesZigzag: 0
   numberOfEnemiesToSpawn: 5
   cooldownToStartNextWave: 5

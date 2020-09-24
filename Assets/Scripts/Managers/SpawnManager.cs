@@ -94,15 +94,15 @@ public class SpawnManager : MonoSinglton<SpawnManager>
             float c = Random.Range(0f, 100f);
             int type = -1;
 
-            if (c < 2f)
+            if (c < 10f)
             {
                 type = 2; // Epic Item
             }
-            else if (c > 2f && c < 5f)
+            else if (c > 10f && c < 50f)
             {
                 type = 1; // Rare Item
             }
-            else if (c > 5f && c < 100f)
+            else if (c > 50f && c < 100f)
             {
                 type = 0; // Commun Item
             }
@@ -140,8 +140,18 @@ public class SpawnManager : MonoSinglton<SpawnManager>
                         if (e.activeInHierarchy == false && e != null)
                         {
                             Enemy en = e.GetComponent<Enemy>();
+                            int can = Random.Range(0, 2);
+                            Debug.Log(can);
                             if (en != null)
                             {
+                                if(wave.canEnemiesZigzag == true)
+                                {
+                                    if (can == 1)
+                                        en._activeZigZag = true;
+                                    else
+                                        en._activeZigZag = false;
+                                }
+                                en.canShoot = wave.enemiesCanShoot;
                                 en.ChooseRandomMouvementType();
                                 EnemyMouvementType(en);
                             }

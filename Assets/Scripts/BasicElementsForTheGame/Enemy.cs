@@ -15,29 +15,39 @@ public class Enemy : MonoBehaviour
     private int _speed;
     private Animator _enemyAnimator;
     [SerializeField]
-    private AnimationClip _deathAnimation;
-    private bool _stopMoving = false;
-    private bool _cankill = true;
+    private AnimationClip _deathAnimation;    
 
     [Header("Enemy Mouvement System")]
     public EnemyMouvementTypes _currentMouvementType;
+    [SerializeField]
+    private bool _stopMoving = false;
+    public bool _activeZigZag;
+    [Range(0.1f,1f)]
+    [SerializeField]
+    private float _zigZagAmplitude = 0.1f;
+    private float _switch = 0.0f;
+    private float _maxX = 1f;
+    private float _minX = -1f;
 
     [Header("Enemy Bullets")]
+    public bool canShoot;
+    private bool canKillOnCollide = true;
     public GameObject bulletPrefab;
     public List<GameObject> enemyBullets = new List<GameObject>();
     public int enemyBulletAmount;
 
     private void OnEnable()
     {
-        StartCoroutine(EnemyShoot());
+        if(canShoot == true)
+            StartCoroutine(EnemyShoot());
     }
 
     private void OnDisable()
     {
-        if (_cankill == false)
+        if (canKillOnCollide == false)
         {
             _enemyAnimator.SetBool("EnemyDead", false);
-            _cankill = true;
+            canKillOnCollide = true;
             _stopMoving = false;
         }
     }
@@ -73,11 +83,24 @@ public class Enemy : MonoBehaviour
     {
          while(true)
         {
-            if(_cankill == true && enemyBulletAmount != 0)
+            if(canKillOnCollide == true && enemyBulletAmount != 0)
             {
                 PoolingManager.Instance.shoot(enemyBullets, transform.position);
             }
             yield return new WaitForSeconds(6.0f);
+        }
+    }
+
+    private void ZigZagMouvement()
+    {
+        transform.Translate(new Vector3(Mathf.Lerp(_minX, _maxX, _switch), 0, 0) * _speed * Time.deltaTime);
+        _switch += 0.1f * _zigZagAmplitude;
+        if (_switch >= 1)
+        {
+            _switch = 0.0f;
+            float temp = _maxX;
+            _maxX = _minX;
+            _minX = temp;
         }
     }
 
@@ -86,6 +109,10 @@ public class Enemy : MonoBehaviour
         if(_stopMoving == false)
         {
             transform.Translate(Vector3.down * _speed * Time.deltaTime);
+            if(_activeZigZag == true)
+            {
+                ZigZagMouvement();
+            }
         }
         
         switch(_currentMouvementType)
@@ -121,7 +148,7 @@ public class Enemy : MonoBehaviour
     {
         if(other.name == "Player")
         {
-            if(_cankill == true)
+            if(canKillOnCollide == true)
             {
                 Player p = other.GetComponent<Player>();
                 p.decreaseHealth();
@@ -139,7 +166,7 @@ public class Enemy : MonoBehaviour
     IEnumerator EnemyDeadAnimation()
     {
         _enemyAnimator.SetBool("EnemyDead",true);
-        _cankill = false;
+        canKillOnCollide = false;
         _stopMoving = true;
         SpawnManager.Instance.enemiesStillAlive--;
         ActiveOrDeactiveCollider();
