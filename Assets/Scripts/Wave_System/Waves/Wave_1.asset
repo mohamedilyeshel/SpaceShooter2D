@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesCanShoot: 0
   canEnemiesZigzag: 0
-  numberOfEnemiesToSpawn: 5
+  numberOfEnemiesToSpawn: 1
   cooldownToStartNextWave: 5

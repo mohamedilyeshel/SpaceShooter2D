@@ -24,6 +24,9 @@ public class SpawnManager : MonoSinglton<SpawnManager>
     [SerializeField]
     private GameObject _powerUpContainer;
     public List<PowerU> powerUps = new List<PowerU>();
+    [Range(1,5)]
+    [SerializeField]
+    private int _spawnPowerUpAtSameTime = 1;
 
     [Header("")]
     [SerializeField]
@@ -70,13 +73,20 @@ public class SpawnManager : MonoSinglton<SpawnManager>
 
     public IEnumerator SpawnPowerUp()
     {
+        var y = 0;
         while(_spawnDone == false)
         {
             var i = SpawnChances();
             if (powerUps[i].powerUpPrefab.activeInHierarchy == false)
             {
+                y++;
                 AddThePowerUP(powerUps[i].powerUpPrefab);
-                yield return new WaitForSeconds(15.0f);
+                if(y == _spawnPowerUpAtSameTime)
+                {
+                    yield return new WaitForSeconds(15.0f);
+                    y = 0;
+                }
+                yield return null;
             }
             else
             {
@@ -94,15 +104,15 @@ public class SpawnManager : MonoSinglton<SpawnManager>
             float c = Random.Range(0f, 100f);
             int type = -1;
 
-            if (c < 10f)
+            if (c <= 10f)
             {
                 type = 2; // Epic Item
             }
-            else if (c > 10f && c < 50f)
+            else if (c > 10f && c <= 40f)
             {
                 type = 1; // Rare Item
             }
-            else if (c > 50f && c < 100f)
+            else if (c > 40f && c <= 100f)
             {
                 type = 0; // Commun Item
             }

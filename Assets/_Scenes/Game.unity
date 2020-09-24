@@ -192,6 +192,7 @@ MonoBehaviour:
       type: 3}
     powerUpCooldown: 4
     _typeOfItem: 2
+  _spawnPowerUpAtSameTime: 3
   _spawnDone: 0
 --- !u!4 &41749378
 Transform:
@@ -380,7 +381,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -63, y: 21.5}
+  m_AnchoredPosition: {x: -88.9, y: 27.4}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &329414669
@@ -411,8 +412,8 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: ...
 --- !u!222 &329414670
