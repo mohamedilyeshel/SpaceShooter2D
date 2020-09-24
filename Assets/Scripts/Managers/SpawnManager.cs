@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SpawnManager : MonoSinglton<SpawnManager>
 {
+    [Header("Wave System")]
+    [SerializeField]
+    private List<WaveSystem> _waves = new List<WaveSystem>();
+    public int enemiesStillAlive;
+
     [Header ("Enemy Part Spawn")]
     [SerializeField]
     private GameObject _enemy;
@@ -33,8 +38,8 @@ public class SpawnManager : MonoSinglton<SpawnManager>
 
     public void StartSpawning()
     {
-        StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnPowerUp());
+        StartCoroutine(SpawnEnemy());
     }
 
     public void SpawnPowerUps()
@@ -119,26 +124,45 @@ public class SpawnManager : MonoSinglton<SpawnManager>
 
     public IEnumerator SpawnEnemy()
     {
-        while(_spawnDone == false)
+        int w = 0;
+        while(_spawnDone == false && w < _waves.Count)
         {
-            foreach(var e in _enemies)
+            WaveSystem wave = _waves[w];
+            enemiesStillAlive = wave.numberOfEnemiesToSpawn;
+            int enemiesToSpawn = wave.numberOfEnemiesToSpawn;
+            UIManager.Instance.UpdateWaveUIText(w+1);
+            while (enemiesStillAlive != 0)
             {
-                if(e.activeInHierarchy == false)
+                if (enemiesToSpawn > 0)
                 {
-                    Enemy en = e.GetComponent<Enemy>();
-
-                    if(en != null)
+                    foreach (var e in _enemies)
                     {
-                        en.ChooseRandomMouvementType();
-                        EnemyMouvementType(en);
+                        if (e.activeInHierarchy == false && e != null)
+                        {
+                            Enemy en = e.GetComponent<Enemy>();
+                            if (en != null)
+                            {
+                                en.ChooseRandomMouvementType();
+                                EnemyMouvementType(en);
+                            }
+                            e.SetActive(true);
+                            enemiesToSpawn--;
+                            break;
+                        }
                     }
-
-                    e.SetActive(true);
-                    break;
+                    yield return new WaitForSeconds(_enemySpawnTime);
                 }
+                yield return null;
             }
-            yield return new WaitForSeconds(_enemySpawnTime);
+            UIManager.Instance.UpdateCountDownUI(wave.cooldownToStartNextWave);
+            yield return new WaitForSeconds(wave.cooldownToStartNextWave);
+            w++;
         }
+
+        if (_spawnDone == false)
+        {
+            UIManager.Instance.UpdateWaveUIText(-1);
+        }           
     }
 
     public void EnemyMouvementType(Enemy e)

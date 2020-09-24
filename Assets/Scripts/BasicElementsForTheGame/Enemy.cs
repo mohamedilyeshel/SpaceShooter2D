@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
 
     public void ChooseRandomMouvementType()
     {
-        var i = Random.Range(0, 5);
+        var i = Random.Range(0, 4);
         var y = 0;
         foreach (EnemyMouvementTypes type in System.Enum.GetValues(typeof(EnemyMouvementTypes)))
         {
@@ -141,6 +141,7 @@ public class Enemy : MonoBehaviour
         _enemyAnimator.SetBool("EnemyDead",true);
         _cankill = false;
         _stopMoving = true;
+        SpawnManager.Instance.enemiesStillAlive--;
         ActiveOrDeactiveCollider();
         AudioManager.Instance.ExplosionPlay();
         yield return new WaitForSeconds(_deathAnimation.length);

@@ -18,7 +18,14 @@ public class UIManager : MonoSinglton<UIManager>
     [SerializeField]
     private Text _ammoCountText;
     [SerializeField]
-    private Image _thrusterBar;    
+    private Image _thrusterBar;
+
+    [SerializeField]
+    private Text _waveTxt;
+    [SerializeField]
+    private Text _waveCoolDown;
+    private float _coolDown = 0;
+    private float _canDecrease = 0;
 
     private void Start()
     {
@@ -40,6 +47,33 @@ public class UIManager : MonoSinglton<UIManager>
         {
             _thrusterBar.fillAmount += 0.01f;
         }           
+    }
+
+    public void UpdateCountDownUI(float coolD)
+    {
+        _coolDown = coolD;
+    }
+
+    private void Update()
+    {
+        if(_coolDown != 0 && Time.time > _canDecrease)
+        {
+            _waveCoolDown.text = _coolDown.ToString();
+            _coolDown--;
+            _canDecrease = Time.time + 1f;
+        }
+        else if(_coolDown == 0 && Time.time > _canDecrease)
+        {
+            _waveCoolDown.text = "";
+        }
+    }
+
+    public void UpdateWaveUIText(int waveNumber)
+    {
+        if (waveNumber == -1)
+            _waveTxt.text = "All Waves Are Completed Congrats !";
+        else
+            _waveTxt.text = "Wave : " + waveNumber;
     }
 
     public void ammouCountUi()
