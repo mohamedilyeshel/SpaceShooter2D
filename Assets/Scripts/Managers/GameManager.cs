@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.PostProcessing;
 
 public class GameManager : MonoSinglton<GameManager>
 {
-
     public int score = 0;
     public int health = 3;
     private bool _isDead = false;
@@ -15,6 +15,8 @@ public class GameManager : MonoSinglton<GameManager>
     [SerializeField]
     private int _scoreChange;
     private Animator _camShake;
+    public PostProcessVolume postVolume;
+    private Vignette vignette;
 
     private void Start()
     {
@@ -42,6 +44,19 @@ public class GameManager : MonoSinglton<GameManager>
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
+        }
+    }
+
+    public void StartNegativeEffect(bool isDone)
+    {
+        postVolume.profile.TryGetSettings(out vignette);
+        if (isDone == false)
+        {
+            vignette.intensity.value = 0.8f;
+        }
+        else
+        {
+            vignette.intensity.value = 0.412f;
         }
     }
 

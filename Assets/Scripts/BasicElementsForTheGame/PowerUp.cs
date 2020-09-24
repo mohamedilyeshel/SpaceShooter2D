@@ -15,7 +15,8 @@ public class PowerUp : MonoBehaviour
         Sheild,
         ammoCollect,
         health,
-        multiShot
+        multiShot,
+        negativeEffect
     }
     public powerUpsTypes currentPowerUp;
 

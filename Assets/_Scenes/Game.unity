@@ -187,7 +187,11 @@ MonoBehaviour:
   - powerUpPrefab: {fileID: 2668669615318829981, guid: 8629b53b436070d43b585b3bb039f81b,
       type: 3}
     powerUpCooldown: 7
-    _typeOfItem: 2
+    _typeOfItem: 1
+  - powerUpPrefab: {fileID: 2667232585188892184, guid: 44b65d67a1d86a948b33fcecc03c5a9b,
+      type: 3}
+    powerUpCooldown: 4
+    _typeOfItem: 1
   _spawnDone: 0
 --- !u!4 &41749378
 Transform:
@@ -541,6 +545,7 @@ MonoBehaviour:
   - {fileID: 1774741029}
   - {fileID: 1648741364}
   _scoreChange: 100
+  postVolume: {fileID: 819888321}
 --- !u!1 &445120815
 GameObject:
   m_ObjectHideFlags: 0

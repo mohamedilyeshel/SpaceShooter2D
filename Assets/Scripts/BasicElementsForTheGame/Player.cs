@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
-
 public class Player : MonoBehaviour
 {
     [Header("Player State")]
@@ -142,6 +141,9 @@ public class Player : MonoBehaviour
             case PowerUp.powerUpsTypes.multiShot:
                 currentLaserType = laserType.multiShot;
                 break;
+            case PowerUp.powerUpsTypes.negativeEffect:
+                GameManager.Instance.StartNegativeEffect(false);
+                break;
         }
         StartCoroutine(cooldownPowerUp(powerScript, SpawnManager.Instance.powerUps[i].powerUpCooldown));
     }
@@ -164,6 +166,9 @@ public class Player : MonoBehaviour
                 break;
             case PowerUp.powerUpsTypes.multiShot:
                 currentLaserType = laserType.normalLaser;
+                break;
+            case PowerUp.powerUpsTypes.negativeEffect:
+                GameManager.Instance.StartNegativeEffect(true);
                 break;
         }
     }
