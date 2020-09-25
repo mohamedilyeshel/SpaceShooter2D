@@ -17,6 +17,8 @@ public class GameManager : MonoSinglton<GameManager>
     private Animator _camShake;
     public PostProcessVolume postVolume;
     private Vignette vignette;
+    [SerializeField]
+    private Transform _player;
 
     private void Start()
     {
@@ -58,6 +60,19 @@ public class GameManager : MonoSinglton<GameManager>
         {
             vignette.intensity.value = 0.412f;
         }
+    }
+
+    public float CalculateDistanceBetweenPlayerAndB(Transform b)
+    {
+        float distance;
+        distance = Vector2.Distance(b.position, _player.position);
+        return distance;
+    }
+
+    public Vector3 CalculateDirectionBetweenPlayerAndB(Transform b)
+    {
+        var direction = _player.position - b.position;
+        return direction;
     }
 
     public void EnableCameraShake()

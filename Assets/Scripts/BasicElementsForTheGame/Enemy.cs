@@ -44,6 +44,8 @@ public class Enemy : MonoBehaviour
     {
         if(canShoot == true)
             StartCoroutine(EnemyShoot());
+
+        SpawnManager.Instance.EnemyMouvementType(this);
     }
 
     private void OnDisable()
@@ -130,26 +132,37 @@ public class Enemy : MonoBehaviour
                 if (transform.position.y < -6.4)
                 {
                     transform.position = new Vector3(Random.Range(-9, 9), 6.4f, 0);
+                    SpawnManager.Instance.EnemyMouvementType(this);
                 }
                 break;
             case EnemyMouvementTypes.RightHorizontal:
                 if (transform.position.x < -11.5)
                 {
                     transform.position = new Vector3(11.91f, Random.Range(-0.75f, -5.28f), 0);
+                    SpawnManager.Instance.EnemyMouvementType(this);
                 }
                 break;
             case EnemyMouvementTypes.LeftHorizontal:
                 if (transform.position.x > 11.5)
                 {
                     transform.position = new Vector3(-11.91f, Random.Range(-0.75f, -5.28f), 0);
+                    SpawnManager.Instance.EnemyMouvementType(this);
                 }
                 break;
             case EnemyMouvementTypes.Diagonale:
                 if (transform.position.y < -7.4)
                 {
                     transform.position = new Vector3(Random.Range(10.87f, 16.43f), Random.Range(11.44f, 5.88f), 0);
+                    SpawnManager.Instance.EnemyMouvementType(this);
                 }
                 break;
+        }
+
+        if(GameManager.Instance.CalculateDistanceBetweenPlayerAndB(this.transform) < 3f)
+        {
+            var direction = GameManager.Instance.CalculateDirectionBetweenPlayerAndB(this.transform);
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 
@@ -157,14 +170,11 @@ public class Enemy : MonoBehaviour
     {
         if(other.name == "Player")
         {
-            if(_enemySheild.enabled == false)
+            if (canKillOnCollide == true)
             {
-                if (canKillOnCollide == true)
-                {
-                    Player p = other.GetComponent<Player>();
-                    p.decreaseHealth();
-                    StartCoroutine(EnemyDeadAnimation());
-                }
+                 Player p = other.GetComponent<Player>();
+                 p.decreaseHealth();
+                 StartCoroutine(EnemyDeadAnimation());
             }
             else
             {
@@ -192,6 +202,7 @@ public class Enemy : MonoBehaviour
         canKillOnCollide = false;
         _stopMoving = true;
         SpawnManager.Instance.enemiesStillAlive--;
+        ActiveSheild(false);
         ActiveOrDeactiveCollider();
         AudioManager.Instance.ExplosionPlay();
         yield return new WaitForSeconds(_deathAnimation.length);

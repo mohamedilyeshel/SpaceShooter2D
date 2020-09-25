@@ -547,6 +547,7 @@ MonoBehaviour:
   - {fileID: 1648741364}
   _scoreChange: 100
   postVolume: {fileID: 819888321}
+  _player: {fileID: 569469028}
 --- !u!1 &445120815
 GameObject:
   m_ObjectHideFlags: 0
