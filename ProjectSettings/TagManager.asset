@@ -10,6 +10,7 @@ TagManager:
   - EnemyLaser
   - MultiShot
   - LaserPower
+  - Detected
   layers:
   - Default
   - TransparentFX

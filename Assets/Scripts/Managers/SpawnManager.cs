@@ -19,6 +19,7 @@ public class SpawnManager : MonoSinglton<SpawnManager>
     public List<GameObject> _enemies = new List<GameObject>();
     [SerializeField]
     private float _enemySpawnTime = 5.0f;
+    private bool _canDodge;
 
     [Header ("Power Ups Part Spawn")]    
     [SerializeField]
@@ -143,6 +144,7 @@ public class SpawnManager : MonoSinglton<SpawnManager>
             int enemiesToSpawn = wave.numberOfEnemiesToSpawn;
             UIManager.Instance.UpdateWaveUIText(w+1);
             int sheildedEnem = 0;
+            _canDodge = wave.VerticaleEnemiesDodge;
             while (enemiesStillAlive != 0)
             {
                 if (enemiesToSpawn > 0)
@@ -203,18 +205,22 @@ public class SpawnManager : MonoSinglton<SpawnManager>
             case Enemy.EnemyMouvementTypes.Vertical:
                 pos = new Vector3(Random.Range(-9, 9), 6.4f, 0);
                 rot = Quaternion.identity;
+                e.canDodge = _canDodge;
                 break;
             case Enemy.EnemyMouvementTypes.RightHorizontal:
                 pos = new Vector3(11.91f, Random.Range(-0.75f,-5.28f), 0);
                 rot = Quaternion.AngleAxis(-90, Vector3.forward);
+                e.canDodge = false;
                 break;
             case Enemy.EnemyMouvementTypes.LeftHorizontal:
                 pos = new Vector3(-11.91f, Random.Range(-0.75f, -5.28f), 0);
-                rot = Quaternion.AngleAxis(90, Vector3.forward);                
+                rot = Quaternion.AngleAxis(90, Vector3.forward);
+                e.canDodge = false;
                 break;
             case Enemy.EnemyMouvementTypes.Diagonale:
                 pos = new Vector3(Random.Range(10.87f, 16.43f), Random.Range(11.44f, 5.88f), 0);
                 rot = Quaternion.AngleAxis(-45, Vector3.forward);
+                e.canDodge = false;
                 break;
         }
         e.transform.position = pos;

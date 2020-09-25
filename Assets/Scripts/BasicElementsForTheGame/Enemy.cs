@@ -21,6 +21,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private SpriteRenderer _enemySheild;
     public bool canFireFromBehind = false;
+    public bool canDodge;
+    [SerializeField]
+    private int _dodgeTimes;
+    private int _currentDodges;
 
     [Header("Enemy Mouvement System")]
     public EnemyMouvementTypes _currentMouvementType;
@@ -51,6 +55,8 @@ public class Enemy : MonoBehaviour
             StartCoroutine(EnemyShoot(enemyBullets));
 
         SpawnManager.Instance.EnemyMouvementType(this);
+
+        _currentDodges = 0;
     }
 
     private void OnDisable()
@@ -210,6 +216,25 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Detected"))
+        {
+            if(canDodge == true && _currentDodges < _dodgeTimes)
+            {
+                transform.Translate(new Vector3(Mathf.Lerp(0, 1, 1), 0, 0) * 13 * Time.deltaTime);
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if(other.CompareTag("Detected"))
+        {
+            _currentDodges++;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.name == "Player")
@@ -236,6 +261,7 @@ public class Enemy : MonoBehaviour
             else
             {
                 ActiveSheild(false);
+                other.gameObject.SetActive(false);
             }
         }
     }

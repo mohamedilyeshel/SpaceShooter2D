@@ -213,6 +213,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _deathAnimation: {fileID: 7400000, guid: 20a0ca02655c0534cbe6c3febf122651, type: 2}
   _enemySheild: {fileID: 1331910470}
+  canFireFromBehind: 0
+  canDodge: 0
+  _dodgeTimes: 2
   _currentMouvementType: 0
   _stopMoving: 0
   _activeZigZag: 0
