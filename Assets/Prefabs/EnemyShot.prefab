@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2385447116446043631}
   m_Layer: 0
   m_Name: EnemyShot
-  m_TagString: Untagged
+  m_TagString: LaserPower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,6 +176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 4
+  _laserDirection: 0
+  _bulletBehind: 0
 --- !u!1 &6217856526562963033
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1549212342262422181}
   - component: {fileID: 3425182470838991491}
   - component: {fileID: 4293676992984790876}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ammoCollect_PowerUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}

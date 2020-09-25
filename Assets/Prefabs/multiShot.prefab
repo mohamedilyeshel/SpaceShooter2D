@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2668669615318829983}
   - component: {fileID: 2668669615318829980}
   - component: {fileID: 2668669615318830176}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: multiShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

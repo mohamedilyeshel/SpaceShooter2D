@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
     public List<GameObject> enemyBehinBullets = new List<GameObject>();
     public int enemyBulletAmount;
     private float _canShootFromBehind = 0;
+    private float _canShootPowerUp = 0;
 
     private void OnEnable()
     {
@@ -75,6 +76,8 @@ public class Enemy : MonoBehaviour
 
         if(canFireFromBehind == true)
             SmartEnemy();
+
+        EnemyDestroyPowerUp();
     }
 
     public void ActiveSheild(bool canActive)
@@ -135,13 +138,23 @@ public class Enemy : MonoBehaviour
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, 3f, 1 << 9);
         if(hitInfo.collider != null)
         {
-            if(hitInfo.transform.tag == "Player")
+            if(Time.time > _canShootFromBehind)
             {
-                if(Time.time > _canShootFromBehind)
-                {
-                    EnemyShootBehind(enemyBehinBullets);
-                    _canShootFromBehind = Time.time + 2f;
-                }
+                EnemyShootBehind(enemyBehinBullets);
+                _canShootFromBehind = Time.time + 2f;
+            }
+        }
+    }
+
+    public void EnemyDestroyPowerUp()
+    {
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, -transform.up, 3f, 1 << 10);
+        if(hitInfo.collider != null)
+        {
+            if (Time.time > _canShootPowerUp)
+            {
+                PoolingManager.Instance.shoot(enemyBullets, transform.position);
+                _canShootPowerUp = Time.time + 2f;
             }
         }
     }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8076122448590360059}
   - component: {fileID: 8076122448590360004}
   - component: {fileID: 8076122448590360005}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sheild_PowerUP
   m_TagString: Untagged
   m_Icon: {fileID: 0}

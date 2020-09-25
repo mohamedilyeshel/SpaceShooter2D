@@ -46,6 +46,12 @@ public class PowerUp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.transform.tag == "LaserPower")
+        {
+            gameObject.SetActive(false);
+            collision.gameObject.SetActive(false);
+        }
+
         if(collision.transform.tag == "Player")
         {
             int y = 0;
