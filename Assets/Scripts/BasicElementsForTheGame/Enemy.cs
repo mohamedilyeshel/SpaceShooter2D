@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     [Header("Enemy Abilities")]
     [SerializeField]
     private SpriteRenderer _enemySheild;
+    public bool canFireFromBehind = false;
 
     [Header("Enemy Mouvement System")]
     public EnemyMouvementTypes _currentMouvementType;
@@ -38,12 +39,15 @@ public class Enemy : MonoBehaviour
     private bool canKillOnCollide = true;
     public GameObject bulletPrefab;
     public List<GameObject> enemyBullets = new List<GameObject>();
+    public GameObject behindBulletPrefab;
+    public List<GameObject> enemyBehinBullets = new List<GameObject>();
     public int enemyBulletAmount;
+    private float _canShootFromBehind = 0;
 
     private void OnEnable()
     {
         if(canShoot == true)
-            StartCoroutine(EnemyShoot());
+            StartCoroutine(EnemyShoot(enemyBullets));
 
         SpawnManager.Instance.EnemyMouvementType(this);
     }
@@ -68,6 +72,9 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         enemyTransform();
+
+        if(canFireFromBehind == true)
+            SmartEnemy();
     }
 
     public void ActiveSheild(bool canActive)
@@ -90,16 +97,24 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator EnemyShoot()
+    IEnumerator EnemyShoot(List<GameObject> bulletList)
     {
          while(true)
-        {
+         {
             if(canKillOnCollide == true && enemyBulletAmount != 0)
             {
-                PoolingManager.Instance.shoot(enemyBullets, transform.position);
+                PoolingManager.Instance.shoot(bulletList, transform.position);
             }
             yield return new WaitForSeconds(6.0f);
-        }
+         }
+    }
+
+    public void EnemyShootBehind(List<GameObject> bulletList)
+    {
+         if (canKillOnCollide == true && enemyBulletAmount != 0)
+         {
+             PoolingManager.Instance.shoot(bulletList, transform.position);
+         }
     }
 
     private void ZigZagMouvement()
@@ -112,6 +127,22 @@ public class Enemy : MonoBehaviour
             float temp = _maxX;
             _maxX = _minX;
             _minX = temp;
+        }
+    }
+
+    public void SmartEnemy()
+    {
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, 3f, 1 << 9);
+        if(hitInfo.collider != null)
+        {
+            if(hitInfo.transform.tag == "Player")
+            {
+                if(Time.time > _canShootFromBehind)
+                {
+                    EnemyShootBehind(enemyBehinBullets);
+                    _canShootFromBehind = Time.time + 2f;
+                }
+            }
         }
     }
 
@@ -158,7 +189,7 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
-        if(GameManager.Instance.CalculateDistanceBetweenPlayerAndB(this.transform) < 3f)
+        if(GameManager.Instance.CalculateDistanceBetweenPlayerAndB(this.transform) < 2f)
         {
             var direction = GameManager.Instance.CalculateDirectionBetweenPlayerAndB(this.transform);
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;

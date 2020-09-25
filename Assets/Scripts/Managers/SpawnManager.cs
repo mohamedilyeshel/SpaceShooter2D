@@ -65,7 +65,8 @@ public class SpawnManager : MonoSinglton<SpawnManager>
             Enemy enem = enemy.GetComponent<Enemy>();     
             for(int y = 0; y < enem.enemyBulletAmount; y++)
             {
-                PoolingManager.Instance.Spawn_Bullets(enem.bulletPrefab, enem.transform.position, enem.transform.GetChild(0).gameObject, enem.enemyBullets);
+                PoolingManager.Instance.Spawn_Bullets(enem.bulletPrefab, enem.transform.position, enem.transform.GetChild(1).gameObject, enem.enemyBullets);
+                PoolingManager.Instance.Spawn_Bullets(enem.behindBulletPrefab, enem.transform.position, enem.transform.GetChild(0).gameObject, enem.enemyBehinBullets);
             }
             enemy.SetActive(false);
         }
@@ -168,6 +169,7 @@ public class SpawnManager : MonoSinglton<SpawnManager>
                                         en._activeZigZag = false;
                                 }
 
+                                en.canFireFromBehind = wave.enemiesCanShootFromBehind;
                                 en.canShoot = wave.enemiesCanShoot;
                                 en.ChooseRandomMouvementType();
                                 EnemyMouvementType(en);

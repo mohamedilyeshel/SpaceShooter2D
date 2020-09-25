@@ -8,6 +8,7 @@ public class WaveSystem : ScriptableObject
     public bool enemiesCanShoot;
     public bool canEnemiesZigzag;
     public int sheildedEnemies;
+    public bool enemiesCanShootFromBehind;
     public int numberOfEnemiesToSpawn;
     public float cooldownToStartNextWave;
 }

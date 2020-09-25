@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyShot : Laser
 {
+    [SerializeField]
+    private bool _bulletBehind;
+
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -18,7 +21,10 @@ public class EnemyShot : Laser
 
     public override void laserMvment()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        if(_bulletBehind == false)
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        else
+            transform.Translate(Vector3.up * _speed * Time.deltaTime);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

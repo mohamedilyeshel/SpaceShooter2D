@@ -821,7 +821,7 @@ GameObject:
   - component: {fileID: 569469027}
   - component: {fileID: 569469026}
   - component: {fileID: 569469029}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1856,7 +1856,7 @@ GameObject:
   - component: {fileID: 1500479253}
   - component: {fileID: 1500479254}
   - component: {fileID: 1500479255}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Thruster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1957,7 +1957,7 @@ GameObject:
   - component: {fileID: 1528897355}
   - component: {fileID: 1528897356}
   - component: {fileID: 1528897357}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: player_sheild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2109,7 +2109,7 @@ GameObject:
   - component: {fileID: 1648741365}
   - component: {fileID: 1648741366}
   - component: {fileID: 1648741367}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SecondHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2572,7 +2572,7 @@ GameObject:
   - component: {fileID: 1774741030}
   - component: {fileID: 1774741031}
   - component: {fileID: 1774741032}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FirstHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
