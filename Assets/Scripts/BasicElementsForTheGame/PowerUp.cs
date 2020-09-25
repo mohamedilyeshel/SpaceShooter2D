@@ -17,7 +17,8 @@ public class PowerUp : MonoBehaviour
         ammoCollect,
         health,
         multiShot,
-        negativeEffect
+        negativeEffect,
+        rocketLauncher
     }
     public powerUpsTypes currentPowerUp;
 

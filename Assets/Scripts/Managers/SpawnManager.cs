@@ -140,6 +140,12 @@ public class SpawnManager : MonoSinglton<SpawnManager>
         while(_spawnDone == false && w < _waves.Count)
         {
             WaveSystem wave = _waves[w];
+
+            if(enemiesStillAlive == -1)
+            {
+                enemiesStillAlive = 0; // bug fix
+            }
+
             enemiesStillAlive = wave.numberOfEnemiesToSpawn;
             int enemiesToSpawn = wave.numberOfEnemiesToSpawn;
             UIManager.Instance.UpdateWaveUIText(w+1);

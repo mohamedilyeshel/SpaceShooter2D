@@ -11,6 +11,7 @@ TagManager:
   - MultiShot
   - LaserPower
   - Detected
+  - Rocket
   layers:
   - Default
   - TransparentFX

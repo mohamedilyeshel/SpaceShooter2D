@@ -23,7 +23,8 @@ public class Player : MonoBehaviour
     {
         normalLaser,
         tripleShot,
-        multiShot
+        multiShot,
+        rockets
     }
     [Header("PowerUps Active Or Not")]
     public laserType currentLaserType = laserType.normalLaser;
@@ -144,6 +145,9 @@ public class Player : MonoBehaviour
             case PowerUp.powerUpsTypes.negativeEffect:
                 GameManager.Instance.StartNegativeEffect(false);
                 break;
+            case PowerUp.powerUpsTypes.rocketLauncher:
+                currentLaserType = laserType.rockets;
+                break;
         }
         StartCoroutine(cooldownPowerUp(powerScript, SpawnManager.Instance.powerUps[i].powerUpCooldown));
     }
@@ -169,6 +173,9 @@ public class Player : MonoBehaviour
                 break;
             case PowerUp.powerUpsTypes.negativeEffect:
                 GameManager.Instance.StartNegativeEffect(true);
+                break;
+            case PowerUp.powerUpsTypes.rocketLauncher:
+                currentLaserType = laserType.normalLaser;
                 break;
         }
     }

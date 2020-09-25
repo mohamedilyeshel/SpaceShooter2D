@@ -36,6 +36,14 @@ public class PoolingManager : MonoSinglton<PoolingManager>
     [SerializeField]
     private List<GameObject> _multishotBullets = new List<GameObject>();
 
+    [Header("Rocket Bullets Behavior")]
+    [SerializeField]
+    private List<GameObject> _rocketBullets = new List<GameObject>();
+    [SerializeField]
+    private GameObject _rocketPrefab;
+    [SerializeField]
+    private GameObject _rocketContainer;
+
     public void RefillAmmo()
     {
         bulletsAmmount += _bulletCollected;
@@ -52,6 +60,7 @@ public class PoolingManager : MonoSinglton<PoolingManager>
             Spawn_Bullets(_laser, new Vector3(p.transform.position.x, y + 0.8f, 0), _bulletContainer, Bullets);
             Spawn_Bullets(_tripleShot, p.transform.position, _tripleContainer, tripleBullets);
             Spawn_Bullets(_multiShotPrefab, p.transform.position, _multiShotContainer, _multishotBullets);
+            Spawn_Bullets(_rocketPrefab, new Vector3(p.transform.position.x, y + 1.2f, 0), _rocketContainer, _rocketBullets);
         }
     }
 
@@ -91,7 +100,7 @@ public class PoolingManager : MonoSinglton<PoolingManager>
                         shoot(tripleBullets, pos);
                     }
                 }
-                else
+                else if(laserType == Player.laserType.multiShot)
                 {
                     if(bulletsAmmount < 5)
                     {
@@ -104,6 +113,12 @@ public class PoolingManager : MonoSinglton<PoolingManager>
                         _canShoot = true;
                         shoot(_multishotBullets, pos);
                     }
+                }
+                else
+                {
+                    pos.y += 1.2f;
+                    shoot(_rocketBullets, pos);
+                    _canShoot = true;
                 }
             }
             AudioManager.Instance.LaserShotAudioPlay(_canShoot);
@@ -131,7 +146,7 @@ public class PoolingManager : MonoSinglton<PoolingManager>
 
     public void decreaseAmmo(Player.laserType laserType)
     {
-        if (laserType == Player.laserType.normalLaser)
+        if (laserType == Player.laserType.normalLaser || laserType == Player.laserType.rockets)
             bulletsAmmount--;
         else if (laserType == Player.laserType.tripleShot)
             bulletsAmmount -= 3;

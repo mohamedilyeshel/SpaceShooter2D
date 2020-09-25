@@ -264,6 +264,13 @@ public class Enemy : MonoBehaviour
                 other.gameObject.SetActive(false);
             }
         }
+        
+        if(other.CompareTag("Rocket"))
+        {
+            other.gameObject.SetActive(false);
+            GameManager.Instance.increaseScore(15);
+            StartCoroutine(EnemyDeadAnimation());
+        }
     }
 
     IEnumerator EnemyDeadAnimation()

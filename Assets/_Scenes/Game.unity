@@ -188,6 +188,10 @@ MonoBehaviour:
       type: 3}
     powerUpCooldown: 7
     _typeOfItem: 2
+  - powerUpPrefab: {fileID: 1169316060097413750, guid: 1ce053920511b3f46b52da4aa2ce4e06,
+      type: 3}
+    powerUpCooldown: 7
+    _typeOfItem: 2
   - powerUpPrefab: {fileID: 2667232585188892184, guid: 44b65d67a1d86a948b33fcecc03c5a9b,
       type: 3}
     powerUpCooldown: 4
@@ -346,6 +350,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 41749378}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &313556721
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 313556722}
+  m_Layer: 0
+  m_Name: RocketBullet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &313556722
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313556721}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 445120816}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &329414667
 GameObject:
@@ -579,6 +613,7 @@ Transform:
   - {fileID: 726845890}
   - {fileID: 945480944}
   - {fileID: 48345100}
+  - {fileID: 313556722}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -609,6 +644,10 @@ MonoBehaviour:
     type: 3}
   _multiShotContainer: {fileID: 48345099}
   _multishotBullets: []
+  _rocketBullets: []
+  _rocketPrefab: {fileID: 7934052649255226476, guid: 35b1f948f07e1514e99222e88f192ac5,
+    type: 3}
+  _rocketContainer: {fileID: 313556721}
 --- !u!1 &453823653
 GameObject:
   m_ObjectHideFlags: 0
@@ -1871,7 +1910,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500479252}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -3.16, z: 0}
+  m_LocalPosition: {x: 0, y: -3.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 569469028}
