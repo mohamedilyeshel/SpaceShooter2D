@@ -15,7 +15,11 @@ public class Enemy : MonoBehaviour
     private int _speed;
     private Animator _enemyAnimator;
     [SerializeField]
-    private AnimationClip _deathAnimation;    
+    private AnimationClip _deathAnimation;
+
+    [Header("Enemy Abilities")]
+    [SerializeField]
+    private SpriteRenderer _enemySheild;
 
     [Header("Enemy Mouvement System")]
     public EnemyMouvementTypes _currentMouvementType;
@@ -62,6 +66,11 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         enemyTransform();
+    }
+
+    public void ActiveSheild(bool canActive)
+    {
+        _enemySheild.enabled = canActive;
     }
 
     public void ChooseRandomMouvementType()
@@ -148,18 +157,32 @@ public class Enemy : MonoBehaviour
     {
         if(other.name == "Player")
         {
-            if(canKillOnCollide == true)
+            if(_enemySheild.enabled == false)
             {
-                Player p = other.GetComponent<Player>();
-                p.decreaseHealth();
-                StartCoroutine(EnemyDeadAnimation());
+                if (canKillOnCollide == true)
+                {
+                    Player p = other.GetComponent<Player>();
+                    p.decreaseHealth();
+                    StartCoroutine(EnemyDeadAnimation());
+                }
+            }
+            else
+            {
+                ActiveSheild(false);
             }
         }
         else if(other.CompareTag("Laser"))
         {
-            StartCoroutine(EnemyDeadAnimation());
-            other.gameObject.SetActive(false);
-            GameManager.Instance.increaseScore(Random.Range(5,11));
+            if (_enemySheild.enabled == false)
+            {
+                StartCoroutine(EnemyDeadAnimation());
+                other.gameObject.SetActive(false);
+                GameManager.Instance.increaseScore(Random.Range(5, 11));
+            }
+            else
+            {
+                ActiveSheild(false);
+            }
         }
     }
 

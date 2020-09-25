@@ -141,6 +141,7 @@ public class SpawnManager : MonoSinglton<SpawnManager>
             enemiesStillAlive = wave.numberOfEnemiesToSpawn;
             int enemiesToSpawn = wave.numberOfEnemiesToSpawn;
             UIManager.Instance.UpdateWaveUIText(w+1);
+            int sheildedEnem = 0;
             while (enemiesStillAlive != 0)
             {
                 if (enemiesToSpawn > 0)
@@ -151,9 +152,14 @@ public class SpawnManager : MonoSinglton<SpawnManager>
                         {
                             Enemy en = e.GetComponent<Enemy>();
                             int can = Random.Range(0, 2);
-                            Debug.Log(can);
                             if (en != null)
                             {
+                                if(sheildedEnem < wave.sheildedEnemies)
+                                {
+                                    en.ActiveSheild(true);
+                                    sheildedEnem++;
+                                }
+
                                 if(wave.canEnemiesZigzag == true)
                                 {
                                     if (can == 1)
@@ -161,6 +167,7 @@ public class SpawnManager : MonoSinglton<SpawnManager>
                                     else
                                         en._activeZigZag = false;
                                 }
+
                                 en.canShoot = wave.enemiesCanShoot;
                                 en.ChooseRandomMouvementType();
                                 EnemyMouvementType(en);
