@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesCanShoot: 0
   canEnemiesZigzag: 0
-  sheildedEnemies: 1
-  enemiesCanShootFromBehind: 1
-  VerticaleEnemiesDodge: 1
-  numberOfEnemiesToSpawn: 1
+  sheildedEnemies: 0
+  enemiesCanShootFromBehind: 0
+  VerticaleEnemiesDodge: 0
+  numberOfEnemiesToSpawn: 0
   cooldownToStartNextWave: 5
+  bossWave: 0

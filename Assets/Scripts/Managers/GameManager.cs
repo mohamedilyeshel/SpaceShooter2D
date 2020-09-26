@@ -19,6 +19,8 @@ public class GameManager : MonoSinglton<GameManager>
     private Vignette vignette;
     [SerializeField]
     private Transform _player;
+    [SerializeField]
+    private FinalBoss _boss;
 
     private void Start()
     {
@@ -46,6 +48,11 @@ public class GameManager : MonoSinglton<GameManager>
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
+        }
+
+        if(_boss._health <= 0)
+        {
+            StartCoroutine(_boss.DeadBoss());
         }
     }
 

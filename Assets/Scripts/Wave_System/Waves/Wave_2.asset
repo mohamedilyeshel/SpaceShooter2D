@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f17dd02a904c27943a97e2951577f332, type: 3}
   m_Name: Wave_2
   m_EditorClassIdentifier: 
-  enemiesCanShoot: 0
-  canEnemiesZigzag: 1
-  sheildedEnemies: 0
-  enemiesCanShootFromBehind: 0
-  VerticaleEnemiesDodge: 1
-  numberOfEnemiesToSpawn: 1
-  cooldownToStartNextWave: 10
+  enemiesCanShoot: 1
+  canEnemiesZigzag: 0
+  sheildedEnemies: 1
+  enemiesCanShootFromBehind: 1
+  VerticaleEnemiesDodge: 0
+  numberOfEnemiesToSpawn: 0
+  cooldownToStartNextWave: 5
+  bossWave: 0

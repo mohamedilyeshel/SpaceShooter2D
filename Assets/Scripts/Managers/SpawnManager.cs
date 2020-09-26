@@ -29,6 +29,10 @@ public class SpawnManager : MonoSinglton<SpawnManager>
     [SerializeField]
     private int _spawnPowerUpAtSameTime = 1;
 
+    [Header("Boss Spawn Wave")]
+    [SerializeField]
+    private GameObject _boss;
+
     [Header("")]
     [SerializeField]
     private bool _spawnDone = false;
@@ -140,54 +144,68 @@ public class SpawnManager : MonoSinglton<SpawnManager>
         while(_spawnDone == false && w < _waves.Count)
         {
             WaveSystem wave = _waves[w];
+            int enemiesToSpawn = 0;
 
-            if(enemiesStillAlive == -1)
+            if(wave.bossWave == false)
             {
-                enemiesStillAlive = 0; // bug fix
+                enemiesStillAlive = wave.numberOfEnemiesToSpawn;
+                enemiesToSpawn = wave.numberOfEnemiesToSpawn;
+            }
+            else
+            {
+                _boss.SetActive(true);
+                enemiesStillAlive = 1;
             }
 
-            enemiesStillAlive = wave.numberOfEnemiesToSpawn;
-            int enemiesToSpawn = wave.numberOfEnemiesToSpawn;
             UIManager.Instance.UpdateWaveUIText(w+1);
             int sheildedEnem = 0;
             _canDodge = wave.VerticaleEnemiesDodge;
+
             while (enemiesStillAlive != 0)
             {
-                if (enemiesToSpawn > 0)
+                if(wave.bossWave == false)
                 {
-                    foreach (var e in _enemies)
+                    if (enemiesToSpawn > 0)
                     {
-                        if (e.activeInHierarchy == false && e != null)
+                        foreach (var e in _enemies)
                         {
-                            Enemy en = e.GetComponent<Enemy>();
-                            int can = Random.Range(0, 2);
-                            if (en != null)
+                            if (e.activeInHierarchy == false && e != null)
                             {
-                                if(sheildedEnem < wave.sheildedEnemies)
+                                Enemy en = e.GetComponent<Enemy>();
+                                int can = Random.Range(0, 2);
+                                if (en != null)
                                 {
-                                    en.ActiveSheild(true);
-                                    sheildedEnem++;
-                                }
+                                    if (sheildedEnem < wave.sheildedEnemies)
+                                    {
+                                        en.ActiveSheild(true);
+                                        sheildedEnem++;
+                                    }
 
-                                if(wave.canEnemiesZigzag == true)
-                                {
-                                    if (can == 1)
-                                        en._activeZigZag = true;
-                                    else
-                                        en._activeZigZag = false;
-                                }
+                                    if (wave.canEnemiesZigzag == true)
+                                    {
+                                        if (can == 1)
+                                            en._activeZigZag = true;
+                                        else
+                                            en._activeZigZag = false;
+                                    }
 
-                                en.canFireFromBehind = wave.enemiesCanShootFromBehind;
-                                en.canShoot = wave.enemiesCanShoot;
-                                en.ChooseRandomMouvementType();
-                                EnemyMouvementType(en);
+                                    en.canFireFromBehind = wave.enemiesCanShootFromBehind;
+                                    en.canShoot = wave.enemiesCanShoot;
+                                    en.ChooseRandomMouvementType();
+                                    EnemyMouvementType(en);
+                                }
+                                e.SetActive(true);
+                                enemiesToSpawn--;
+                                break;
                             }
-                            e.SetActive(true);
-                            enemiesToSpawn--;
-                            break;
                         }
+                        yield return new WaitForSeconds(_enemySpawnTime);
                     }
-                    yield return new WaitForSeconds(_enemySpawnTime);
+
+                    if (enemiesStillAlive == -1)
+                    {
+                        enemiesStillAlive = 0; // bug fix
+                    }
                 }
                 yield return null;
             }

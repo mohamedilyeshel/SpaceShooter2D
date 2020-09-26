@@ -12,6 +12,7 @@ TagManager:
   - LaserPower
   - Detected
   - Rocket
+  - Boss
   layers:
   - Default
   - TransparentFX
